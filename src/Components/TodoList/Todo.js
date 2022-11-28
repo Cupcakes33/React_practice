@@ -43,18 +43,23 @@ let TodoContentsWrapper = styled.div`
   width: 70%;
 `;
 
-const TodoContents = () => {
-  return (
-    <TodoBox>
-      <TodoContentsWrapper>
-        <TodoContentsSpan>1st Todo1st</TodoContentsSpan>
-      </TodoContentsWrapper>
-      <ControlButtonWrapper>
-        <ControlButton control="'COMPLETED'"></ControlButton>
-        <ControlButton control="'DELETE'"></ControlButton>
-      </ControlButtonWrapper>
-    </TodoBox>
-  );
+const Todo = (props) => {
+  const controlLiteral = `"${props.control}"`;
+  const listItem = props.todolists.map((todo, n) => {
+    return (
+      <TodoBox key={`listItem${n}`}>
+        <TodoContentsWrapper>
+          <TodoContentsSpan>{todo.todoContents}</TodoContentsSpan>
+        </TodoContentsWrapper>
+        <ControlButtonWrapper>
+          <ControlButton control={controlLiteral}></ControlButton>
+          <ControlButton control="'DELETE'"></ControlButton>
+        </ControlButtonWrapper>
+      </TodoBox>
+    );
+  });
+
+  return <>{listItem}</>;
 };
 
-export default TodoContents;
+export default Todo;

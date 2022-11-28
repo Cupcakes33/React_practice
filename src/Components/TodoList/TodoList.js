@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import TodoContents from "./TodoContents";
+import Todo from "./Todo";
 
 let TodoContainer = styled.div`
   width: 100%;
@@ -24,16 +24,22 @@ let Completed = styled.div`
   width: 48%;
 `;
 
-const TodoList = () => {
+const TodoList = (props) => {
+  let todo, completed;
+
+  props.todosContents
+    ? (todo = <Todo todolists={props.todosContents} control={"COMPLETED"} />)
+    : (completed = <Todo todolists={props.todosContents} control={"REVERT"} />);
+
   return (
     <TodoContainer>
       <Todos>
         <h3 style={{ marginBottom: "10px" }}>TO DO</h3>
-        <TodoContents></TodoContents>
+        {todo}
       </Todos>
       <Completed>
         <h3 style={{ marginBottom: "10px" }}>COMPLETED</h3>
-        <TodoContents></TodoContents>
+        {completed}
       </Completed>
     </TodoContainer>
   );

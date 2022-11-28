@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 import styled from "styled-components";
 import TodoForm from "./Components/TodoForm/TodoForm";
@@ -26,13 +26,24 @@ let LogoH1 = styled.h1`
 `;
 
 function App() {
+  const DUMMY_DATA = [];
+  const [todos, setTodos] = useState(DUMMY_DATA);
+  const todosCatcherHandler = (todos) => {
+    let todo = {
+      completed: true,
+      todoContents: todos,
+    };
+    setTodos((prev) => {
+      return [...prev, todo];
+    });
+  };
   return (
     <BackGround>
       <LogoWrapper>
         <LogoH1>TodoList</LogoH1>
       </LogoWrapper>
-      <TodoForm />
-      <TodoList />
+      <TodoForm todosCatcher={todosCatcherHandler} />
+      <TodoList todosContents={todos} />          
     </BackGround>
   );
 }
