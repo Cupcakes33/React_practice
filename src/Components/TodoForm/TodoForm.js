@@ -52,7 +52,6 @@ const TodoForm = (props) => {
   };
   
   return (
-    
     <TodoFormWrapper onSubmit={todoSubmitHandler}>
       <TodoInput
         type="text"
@@ -65,5 +64,7 @@ const TodoForm = (props) => {
     </TodoFormWrapper>
   );
 };
-
+// 이거를 꼭 나눠야할까?
+// 컴포넌트로 나누는 이유가 기능을 분리 => 재사용성을 부여하고 모듈화시키는건데 이 친구가 App.js에 그냥 있다고 해서 안좋을 게있을까?
+// App.js에 있다면 props나 상태관리가 더 용이하지 않을까?
 export default TodoForm;

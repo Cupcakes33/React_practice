@@ -42,20 +42,20 @@ let TodoContentsWrapper = styled.div`
 
 const Todo = (props) => {
   const todoSwitchHandler = () => {
-    props.todoSwitchHandler(props.id)
+    props.todoSwitchHandler(props.todo.id)
   };
   const todoDeleteHandler = () => {
-    props.todoDeleteHandler(props.id);
+    props.todoDeleteHandler(props.todo.id);
   };
 
   return (
     <TodoBox>
       <TodoContentsWrapper>
-        <TodoContentsSpan>{props.todoContents}</TodoContentsSpan>
+        <TodoContentsSpan>{props.todo.todoContents}</TodoContentsSpan>
       </TodoContentsWrapper>
       <ControlButtonWrapper>
         <ControlButton onClick={todoSwitchHandler}>
-          {props.control}
+          {props.todo.completed?'COMPLETED':'REVERT'}
         </ControlButton>
         <ControlButton onClick={todoDeleteHandler}>DELETE</ControlButton>
       </ControlButtonWrapper>

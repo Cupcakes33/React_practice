@@ -36,9 +36,7 @@ const TodoList = (props) => {
           return (
             <Todo
               key={`todo${n}`}
-              id={e.id}
-              todoContents={e.todoContents}
-              control={"COMPLETED"}
+              todo={e}
               todoDeleteHandler={props.todoDeleteHandler}
               todoSwitchHandler={props.todoSwitchHandler}
             />
@@ -51,9 +49,7 @@ const TodoList = (props) => {
           return (
             <Todo
               key={`completed${n}`}
-              id={e.id}
-              todoContents={e.todoContents}
-              control={"REVERT"}
+              todo={e}
               todoDeleteHandler={props.todoDeleteHandler}
               todoSwitchHandler={props.todoSwitchHandler}
             />
