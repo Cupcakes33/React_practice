@@ -28,22 +28,45 @@ let LogoH1 = styled.h1`
 function App() {
   const DUMMY_DATA = [];
   const [todos, setTodos] = useState(DUMMY_DATA);
+  const [counter, setCounter] = useState(0);
+
   const todosCatcherHandler = (todos) => {
     let todo = {
+      id: counter,
       completed: true,
       todoContents: todos,
     };
     setTodos((prev) => {
       return [...prev, todo];
     });
+    setCounter((prev) => {
+      return prev + 1;
+    });
   };
+
+  const todoDeleteHandler = (todo) => {
+    setTodos(todos.filter((e) => e.id !== todo));
+  };
+
+  const todoSwitchHandler = (todo) => {
+    console.log(todo)
+    console.log(todo)
+    setTodos(
+      todos.map((e) => (e.id === todo ? { ...e, completed: !e.completed } : e))
+    );
+  };
+
   return (
     <BackGround>
       <LogoWrapper>
         <LogoH1>TodoList</LogoH1>
       </LogoWrapper>
       <TodoForm todosCatcher={todosCatcherHandler} />
-      <TodoList todosContents={todos} />          
+      <TodoList
+        todoDeleteHandler={todoDeleteHandler}
+        todoSwitchHandler={todoSwitchHandler}
+        todos={todos}
+      />
     </BackGround>
   );
 }

@@ -34,9 +34,6 @@ let ControlButton = styled.button`
   box-shadow: 0 1px 8px rgba(0, 0, 0, 0.25);
   margin-right: 10px;
   cursor: pointer;
-  &::after {
-    content: ${(props) => props.control};
-  }
 `;
 
 let TodoContentsWrapper = styled.div`
@@ -44,22 +41,26 @@ let TodoContentsWrapper = styled.div`
 `;
 
 const Todo = (props) => {
-  const controlLiteral = `"${props.control}"`;
-  const listItem = props.todolists.map((todo, n) => {
-    return (
-      <TodoBox key={`listItem${n}`}>
-        <TodoContentsWrapper>
-          <TodoContentsSpan>{todo.todoContents}</TodoContentsSpan>
-        </TodoContentsWrapper>
-        <ControlButtonWrapper>
-          <ControlButton control={controlLiteral}></ControlButton>
-          <ControlButton control="'DELETE'"></ControlButton>
-        </ControlButtonWrapper>
-      </TodoBox>
-    );
-  });
+  const todoSwitchHandler = () => {
+    props.todoSwitchHandler(props.id)
+  };
+  const todoDeleteHandler = () => {
+    props.todoDeleteHandler(props.id);
+  };
 
-  return <>{listItem}</>;
+  return (
+    <TodoBox>
+      <TodoContentsWrapper>
+        <TodoContentsSpan>{props.todoContents}</TodoContentsSpan>
+      </TodoContentsWrapper>
+      <ControlButtonWrapper>
+        <ControlButton onClick={todoSwitchHandler}>
+          {props.control}
+        </ControlButton>
+        <ControlButton onClick={todoDeleteHandler}>DELETE</ControlButton>
+      </ControlButtonWrapper>
+    </TodoBox>
+  );
 };
 
 export default Todo;

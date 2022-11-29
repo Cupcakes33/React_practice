@@ -40,23 +40,26 @@ let TodoButton = styled.button`
 `;
 
 const TodoForm = (props) => {
-  const [todos, setTodos] = useState("");
+  const [todoInput, setTodoInput] = useState("");
   const todoInputHandler = (event) => {
-    setTodos(event.target.value);
+    setTodoInput(event.target.value);
   };
 
   const todoSubmitHandler = (event) => {
     event.preventDefault();
-    props.todosCatcher(todos);
-    setTodos("");
+    props.todosCatcher(todoInput);
+    setTodoInput("");
   };
+  
   return (
+    
     <TodoFormWrapper onSubmit={todoSubmitHandler}>
       <TodoInput
         type="text"
         maxLength="100"
-        value={todos}
+        value={todoInput}
         onChange={todoInputHandler}
+        required
       ></TodoInput>
       <TodoButton type="submit"></TodoButton>
     </TodoFormWrapper>

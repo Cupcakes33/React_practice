@@ -25,21 +25,40 @@ let Completed = styled.div`
 `;
 
 const TodoList = (props) => {
-  let todo, completed;
-
-  props.todosContents
-    ? (todo = <Todo todolists={props.todosContents} control={"COMPLETED"} />)
-    : (completed = <Todo todolists={props.todosContents} control={"REVERT"} />);
+  const doList = props.todos.filter((e) => e.completed === true);
+  const doCompleted = props.todos.filter((e) => e.completed === false);
 
   return (
     <TodoContainer>
       <Todos>
         <h3 style={{ marginBottom: "10px" }}>TO DO</h3>
-        {todo}
+        {doList.map((e, n) => {
+          return (
+            <Todo
+              key={`todo${n}`}
+              id={e.id}
+              todoContents={e.todoContents}
+              control={"COMPLETED"}
+              todoDeleteHandler={props.todoDeleteHandler}
+              todoSwitchHandler={props.todoSwitchHandler}
+            />
+          );
+        })}
       </Todos>
       <Completed>
         <h3 style={{ marginBottom: "10px" }}>COMPLETED</h3>
-        {completed}
+        {doCompleted.map((e, n) => {
+          return (
+            <Todo
+              key={`completed${n}`}
+              id={e.id}
+              todoContents={e.todoContents}
+              control={"REVERT"}
+              todoDeleteHandler={props.todoDeleteHandler}
+              todoSwitchHandler={props.todoSwitchHandler}
+            />
+          );
+        })}
       </Completed>
     </TodoContainer>
   );
