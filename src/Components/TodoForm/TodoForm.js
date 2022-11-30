@@ -116,6 +116,19 @@ const TodoForm = (props) => {
     setTodoSwitch(false);
   };
 
+  const todoCommentEnterKeyHandler = (
+    e: KeyboardEvent<HTMLTextAreaElement>
+  ) => {
+    if (e.nativeEvent.isComposing) {
+      return;
+    }
+    if (e.key === "Enter" && e.shiftKey) {
+      return;
+    } else if (e.key === "Enter") {
+      todoSubmitHandler(e);
+    }
+  };
+
   return todoSwitch === false ? (
     <ModalSwitchButton
       onClick={() => {
@@ -140,6 +153,7 @@ const TodoForm = (props) => {
           value={setTodoInput.comment}
           placeholder="Comment"
           onChange={todoInputHandler}
+          onKeyDown={todoCommentEnterKeyHandler}
           required
         />
         <ButtonWrapper>
