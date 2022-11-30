@@ -1,6 +1,81 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
+const TodoForm = (props) => {
+  const [todoInput, setTodoInput] = useState({
+    title: "",
+    comment: "",
+  });
+  const [todoSwitch, setTodoSwitch] = useState(false);
+  const todoInputHandler = (event) => {
+    const { value, name } = event.target;
+    setTodoInput({ ...todoInput, [name]: value });
+  };
+
+  const todoSubmitHandler = (event) => {
+    event.preventDefault();
+    props.todosCatcher(todoInput);
+    setTodoInput({
+      title: "",
+      comment: "",
+    });
+    setTodoSwitch(false);
+  };
+
+  const todoCommentEnterKeyHandler = (
+    e: KeyboardEvent<HTMLTextAreaElement>
+  ) => {
+    if (e.nativeEvent.isComposing) {
+      return;
+    }
+    if (e.key === "Enter" && e.shiftKey) {
+      return;
+    } else if (e.key === "Enter") {
+      todoSubmitHandler(e);
+    }
+  };
+
+  return todoSwitch === false ? (
+    <ModalSwitchButton
+      onClick={() => {
+        setTodoSwitch(true);
+      }}
+    />
+  ) : (
+    <ModalOverlay>
+      <TodoFormWrapper onSubmit={todoSubmitHandler}>
+        <TodoTitleInput
+          type="text"
+          name="title"
+          value={setTodoInput.title}
+          maxLength="30"
+          placeholder="Title"
+          onChange={todoInputHandler}
+          required
+        />
+        <TodoCommentInput
+          name="comment"
+          maxLength="100"
+          value={setTodoInput.comment}
+          placeholder="Comment"
+          onChange={todoInputHandler}
+          onKeyDown={todoCommentEnterKeyHandler}
+          required
+        />
+        <ButtonWrapper>
+          <TodoButton type="submit" content="'Submit'" />
+          <TodoButton
+            type="button"
+            content="'Closed'"
+            onClick={() => {
+              setTodoSwitch(false);
+            }}
+          />
+        </ButtonWrapper>
+      </TodoFormWrapper>
+    </ModalOverlay>
+  );
+};
 let TodoFormWrapper = styled.form`
   width: 400px;
   border: 0.3px solid black;
@@ -94,81 +169,5 @@ let ModalOverlay = styled.div`
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
   backdrop-filter: blur(1.5px);
 `;
-
-const TodoForm = (props) => {
-  const [todoInput, setTodoInput] = useState({
-    title: "",
-    comment: "",
-  });
-  const [todoSwitch, setTodoSwitch] = useState(false);
-  const todoInputHandler = (event) => {
-    const { value, name } = event.target;
-    setTodoInput({ ...todoInput, [name]: value });
-  };
-
-  const todoSubmitHandler = (event) => {
-    event.preventDefault();
-    props.todosCatcher(todoInput);
-    setTodoInput({
-      title: "",
-      comment: "",
-    });
-    setTodoSwitch(false);
-  };
-
-  const todoCommentEnterKeyHandler = (
-    e: KeyboardEvent<HTMLTextAreaElement>
-  ) => {
-    if (e.nativeEvent.isComposing) {
-      return;
-    }
-    if (e.key === "Enter" && e.shiftKey) {
-      return;
-    } else if (e.key === "Enter") {
-      todoSubmitHandler(e);
-    }
-  };
-
-  return todoSwitch === false ? (
-    <ModalSwitchButton
-      onClick={() => {
-        setTodoSwitch(true);
-      }}
-    />
-  ) : (
-    <ModalOverlay>
-      <TodoFormWrapper onSubmit={todoSubmitHandler}>
-        <TodoTitleInput
-          type="text"
-          name="title"
-          value={setTodoInput.title}
-          maxLength="30"
-          placeholder="Title"
-          onChange={todoInputHandler}
-          required
-        />
-        <TodoCommentInput
-          name="comment"
-          maxLength="100"
-          value={setTodoInput.comment}
-          placeholder="Comment"
-          onChange={todoInputHandler}
-          onKeyDown={todoCommentEnterKeyHandler}
-          required
-        />
-        <ButtonWrapper>
-          <TodoButton type="submit" content="'Submit'" />
-          <TodoButton
-            type="button"
-            content="'Closed'"
-            onClick={() => {
-              setTodoSwitch(false);
-            }}
-          />
-        </ButtonWrapper>
-      </TodoFormWrapper>
-    </ModalOverlay>
-  );
-};
 
 export default TodoForm;
