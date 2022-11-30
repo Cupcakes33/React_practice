@@ -1,36 +1,40 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
+
 import styled from "styled-components";
 import TodoForm from "./Components/TodoForm/TodoForm";
 import TodoList from "./Components/TodoList/TodoList";
 
-// 초기값 받아오는거(get), 내가 수정할거(set)
 function App() {
   const [todos, setTodos] = useState([]);
-  const [counter, setCounter] = useState(0);
-  // ★ 로컬스토리지 작업시 겹칠 수 있음. 브라우저 리셋하면 conter 초기값으로 가니까 식별자로 부적합
-  // uuid v4 => localstorage.array.length + 라이브러리 100억번을뽑아야 50% 겹칠수 있음. 0.000000006%
 
-  const todosCatcherHandler = (todos) => {
+  useEffect(() => {
+    const data = JSON.parse(localStorage.getItem("todos"));
+    if (data) {
+      setTodos([...data]);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (todos.length !== 0) {
+      localStorage.setItem("todos", JSON.stringify(todos));
+    }
+  }, [todos]);
+
+  const todosCatcherHandler = (item) => {
     let todo = {
-      id: counter,
-      todoContents: todos,
+      id: uuidv4(),
+      todoContents: item,
       completed: true,
     };
     setTodos((prev) => {
       return [...prev, todo];
-    });
-
-    setCounter((prev) => {
-      return prev + 1;
     });
   };
 
   const todoDeleteHandler = (todo) => {
     setTodos(todos.filter((e) => e.id !== todo));
   };
-  // 맵이다.=> 배열 새로만든다.
-  // id가 같으면 수정해라. 아니면 그대로 e로 뽑아라.
-  // id가 같으면 completed를 기존값의 반대로해서 수정해라. 스프레드연산자로 나머지값 갖고와서 합쳐라.
 
   const todoSwitchHandler = (todo) => {
     setTodos(
