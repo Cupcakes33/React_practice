@@ -24,7 +24,8 @@ function App() {
   const todosCatcherHandler = (item) => {
     let todo = {
       id: uuidv4(),
-      todoContents: item,
+      todoTitle: item.title,
+      todoContents: item.comment,
       completed: true,
     };
     setTodos((prev) => {
@@ -69,11 +70,12 @@ let BackGround = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 10px 0;
+  position: relative;
 `;
 
 let LogoWrapper = styled.div`
-  width: 85%;
-  padding-left: 10px;
+  width: 100%;
+  padding-left: 30px;
 `;
 
 let LogoH1 = styled.h1`
