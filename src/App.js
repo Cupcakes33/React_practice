@@ -10,15 +10,11 @@ function App() {
 
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem("todos"));
-    if (data) {
-      setTodos([...data]);
-    }
+    data && setTodos([...data]);
   }, []);
 
   useEffect(() => {
-    if (todos.length !== 0) {
-      localStorage.setItem("todos", JSON.stringify(todos));
-    }
+    todos.length !== 0 && localStorage.setItem("todos", JSON.stringify(todos));
   }, [todos]);
 
   const todosCatcherHandler = (item) => {

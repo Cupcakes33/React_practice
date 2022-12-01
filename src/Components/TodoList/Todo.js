@@ -11,9 +11,7 @@ const Todo = (props) => {
 
   return (
     <TodoBox>
-      <TodoColorHeader
-        headerColor={props.todo.completed ? "#6cc6cb" : "#f685cc"}
-      />
+      <TodoColorHeader color={props.todo.completed ? "#6cc6cb" : "#f685cc"} />
       <TodoContentsWrapper>
         <TodoTitleSpan>{props.todo.todoTitle}</TodoTitleSpan>
         <TodoContentsSpan>{props.todo.todoContents}</TodoContentsSpan>
@@ -50,7 +48,8 @@ let TodoColorHeader = styled.div`
   top: 0;
   height: 5px;
   position: absolute;
-  background: ${(props) => props.headerColor};
+  /* background: ${(props) => props.color}; */
+  background: ${({color}) => color};
 `;
 
 let TodoTitleSpan = styled.span`
